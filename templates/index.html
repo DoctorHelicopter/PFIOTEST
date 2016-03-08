@@ -1,0 +1,47 @@
+<HTML>
+<HEAD>
+    <title>
+        Welcome to the thing
+    </title>
+</HEAD>
+<BODY>
+    <p id="message">{{message}}</p>
+    <form id="menu" action="/" method="post">
+        <label>Available Drinks</label>
+        <br>
+        <select id="availabledrinks" name="availabledrinks" onchange="checkDrink()">
+        </select><br><br>
+        <div id="ingredients"></div>
+        <input id="submitdrink" type="submit" onclick="$('#message').text('Your drink is being prepared!');" hidden></input>
+    </form>
+</BODY>
+<script src="static/jquery-1.12.1.min.js"></script>
+<SCRIPT type="text/javascript">
+$(document).ready(function() {
+    var uri = "static/drinklist.json";
+    $.getJSON(uri, crossDomain=true)
+        .done(function (data) {
+            $('<option>', {text: "(Please select)"}).appendTo($('#availabledrinks'));
+            $('<option>', {text: "Custom"}).appendTo($('#availabledrinks'));
+            $.each(data, function(key, item) {
+                console.log(item);
+                $('<option>', {name: "availabledrinks", value: key, text: item.name}).appendTo($('#availabledrinks'));
+            });
+        });
+});
+
+function checkDrink() {
+    $('#ingredients').empty();
+    $('#submitdrink').hide();
+    var drink = $('#availabledrinks').val();
+    if (drink == "Custom")
+    {
+      //do custom things  
+    }
+    else if (drink != "(Please select)")
+    {
+        $('#submitdrink').show();
+    }
+}
+</SCRIPT>
+</HTML>

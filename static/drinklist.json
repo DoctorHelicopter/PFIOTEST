@@ -1,0 +1,16 @@
+{"ginandtonic" : {"name" : "Gin and Tonic",
+                  "ingredients" : [
+                                    ["gin",4],
+                                    ["tonic",12]
+                                  ]
+                  },
+ "longisland" : {"name" : "Long Island",
+                 "ingredients" : [
+                                    ["gin",4],
+                                    ["vodka",4],
+                                    ["rum",4],
+                                    ["tequila",4],
+                                    ["coke",4]
+                                 ]
+                }
+}
