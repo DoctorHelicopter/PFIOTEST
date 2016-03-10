@@ -1,21 +1,19 @@
-<HTML>
-<HEAD>
-    <title>
-        Welcome to the thing
-    </title>
-</HEAD>
-<BODY>
+{% extends "base.html" %}
+{% block content %}
     <p id="message">{{message}}</p>
     <form id="menu" action="/" method="post">
         <label>Available Drinks</label>
         <br>
         <select id="availabledrinks" name="availabledrinks" onchange="checkDrink()">
         </select><br><br>
-        <div id="ingredients"></div>
-        <input id="submitdrink" type="submit" onclick="$('#message').text('Your drink is being prepared!');" hidden></input>
+        <div id="ingredients">
+            
+        </div>
+        <button id="submitdrink" type="submit" onclick="if ($('#availabledrinks').val()!='Custom') $('#message').text('Your drink is being prepared!');" hidden>Pour</input>
+        <button id="deletedrink" type="submit" formaction="/deletedrink" hidden>Delete</button>
     </form>
 </BODY>
-<script src="static/jquery-1.12.1.min.js"></script>
+
 <SCRIPT type="text/javascript">
 $(document).ready(function() {
     var uri = "static/drinklist.json";
@@ -25,7 +23,7 @@ $(document).ready(function() {
             $('<option>', {text: "Custom"}).appendTo($('#availabledrinks'));
             $.each(data, function(key, item) {
                 console.log(item);
-                $('<option>', {name: "availabledrinks", value: key, text: item.name}).appendTo($('#availabledrinks'));
+                $('<option>', {value: key, text: item.name}).appendTo($('#availabledrinks'));
             });
         });
 });
@@ -33,15 +31,32 @@ $(document).ready(function() {
 function checkDrink() {
     $('#ingredients').empty();
     $('#submitdrink').hide();
+    $('#deletedrink').hide();
     var drink = $('#availabledrinks').val();
-    if (drink == "Custom")
+    if (drink == 'Custom')
     {
-      //do custom things  
+        $('#submitdrink').text('Create');
     }
-    else if (drink != "(Please select)")
+    else
     {
+        $('#submitdrink').text('Pour');
+    }
+    if (drink != "(Please select)")
+    {
+        if (drink != "Custom")
+        {
+            var uri = "static/drinklist.json";
+            $.getJSON(uri, crossDomain=true)
+                .done(function (data) {
+                    $('<ul>', {id:"ingredientlist"}).appendTo($('#ingredients'));
+                    $.each(data[drink].ingredients, function(key, item) {
+                        $('<li>', {text: item[1] + ' shot(s) of ' + item[0]}).appendTo($('#ingredientlist'));
+                    });
+                });
+        }
         $('#submitdrink').show();
+        $('#deletedrink').show();
     }
 }
 </SCRIPT>
-</HTML>
+{% endblock %}

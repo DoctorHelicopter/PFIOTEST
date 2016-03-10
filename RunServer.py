@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, send_from_directory
+from flask import Flask, render_template, request, send_from_directory, url_for, redirect
 from scripts.objects import Drink
 app = Flask(__name__)
+
 
 @app.route('/', methods=['GET','POST'])
 def index():
@@ -8,8 +9,8 @@ def index():
         drink = request.form.get('availabledrinks')
         print drink
         d = Drink()
-        if drink == 'CUSTOM':
-            pass #support this later
+        if drink == 'Custom':
+            return redirect(url_for('newcustom'))
         else:
             d.get_steps(drink)
             
@@ -17,15 +18,46 @@ def index():
         try:
             print "Pouring..."
             d.pour()
+            d.close()
             message = "Your drink is ready!"
         except Exception as ex:
             print "Error!"
             print ex
+            d.close()
             message = "There was an error:", ex
     else:
         message = "Please choose a drink"
     return render_template('index.html',message=message)
-
+    
+    
+@app.route('/newcustom', methods=['POST','GET'])
+def newcustom():
+    if request.method == 'POST':
+        steps = []
+        name = request.form.get('name')
+        liquors = request.form.getlist('liquor') #get by name
+        shots = request.form.getlist('shot')
+        if len(liquors) != len(shots):
+            message = "Invalid entry"
+            return render_template('newcustom.html',message=message)
+        d = Drink()
+        for i in range(len(liquors)):
+            d.add_step(liquors[i],shots[i])
+        d.save(name)
+        message = "Drink created!"
+    else:
+        message = ""
+    return render_template('newcustom.html',message=message)
+    
+    
+@app.route('/deletedrink', methods=['POST'])
+def delete_drink():
+    drink = request.form.get('availabledrinks')
+    print drink
+    d = Drink()
+    d.delete(drink)
+    message = "Drink deleted!"
+    return redirect('/')
     
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
