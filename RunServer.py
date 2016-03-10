@@ -42,7 +42,7 @@ def newcustom():
             return render_template('newcustom.html',message=message)
         d = Drink()
         for i in range(len(liquors)):
-            d.add_step(liquors[i],shots[i])
+            d.add_step(liquors[i],int(shots[i]))
         d.save(name)
         message = "Drink created!"
     else:
@@ -54,9 +54,10 @@ def newcustom():
 def delete_drink():
     drink = request.form.get('availabledrinks')
     print drink
-    d = Drink()
-    d.delete(drink)
-    message = "Drink deleted!"
+    if drink != 'Custom':
+        d = Drink()
+        d.delete(drink)
+        message = "Drink deleted!"
     return redirect('/')
     
 if __name__ == '__main__':

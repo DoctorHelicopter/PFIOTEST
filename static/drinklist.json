@@ -1,1 +1,1 @@
-{"longisland": {"name": "Long Island", "ingredients": [["gin", 1], ["vodka", 1], ["rum", 1], ["tequila", 1], ["coke", 1]]}, "ginandtonic": {"name": "Gin and Tonic", "ingredients": [["gin", 1], ["tonic", 4]]}}
+{"longisland": {"name": "Long Island", "ingredients": [["gin", 1], ["vodka", 1], ["rum", 1], ["tequila", 1], ["coke", 1]]}, "vodkaandtonic": {"name": "Vodka and Tonic", "ingredients": [["vodka", 1], ["tonic", 4]]}, "ginandtonic": {"name": "Gin and Tonic", "ingredients": [["gin", 1], ["tonic", 4]]}}
