@@ -1,8 +1,10 @@
 {
- "gin" : 3,
- "vodka" : 5,
- "rum" : 7,
- "tequila" : 9,
- "coke" : 11,
- "tonic" : 13
+ "gin" : 5,
+ "vodka" : 6,
+ "rum" : 13,
+ "tequila" : 19,
+ "coke" : 26,
+ "tonic" : 16,
+ "unused1" :20,
+ "unused2" : 21
  }
