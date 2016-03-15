@@ -16,15 +16,11 @@ class Drink:
         #channels are defined using the BCM standard
         with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
             self.PUMPS = json.loads(f.read())
-        self.startup()
+        #self.startup()
         
     def startup(self):
         print "Setting up GPIO pins..."
         print self.PUMPS.values()
-        #Define board layout for channels
-        GPIO.setmode(GPIO.BCM)
-        #Setup using a list of channels for output
-        GPIO.setup(self.PUMPS.values(),GPIO.OUT,initial=GPIO.HIGH)
             
     def close(self):
         print "Cleaning up pins..."

@@ -18,12 +18,12 @@ def index():
         try:
             print "Pouring..."
             d.pour()
-            d.close()
+            #d.close()
             message = "Your drink is ready!"
         except Exception as ex:
             print "Error!"
             print ex
-            d.close()
+            #d.close()
             message = "There was an error:", ex
     else:
         message = "Please choose a drink"
@@ -61,4 +61,8 @@ def delete_drink():
     return redirect('/')
     
 if __name__ == '__main__':
+    #Define board layout for channels
+    GPIO.setmode(GPIO.BCM)
+    #Setup using a list of channels for output
+    GPIO.setup(self.PUMPS.values(),GPIO.OUT,initial=GPIO.HIGH)
     app.run(host='0.0.0.0',debug=True)
