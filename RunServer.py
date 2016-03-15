@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, send_from_directory, url_for, redirect
 from scripts.objects import Drink
+import RPi.GPIO as GPIO
 app = Flask(__name__)
 
 
