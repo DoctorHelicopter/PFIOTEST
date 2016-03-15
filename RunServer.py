@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, send_from_directory, url_for, redirect
 from scripts.objects import Drink
+import os
+import sys
+import json
 import RPi.GPIO as GPIO
 app = Flask(__name__)
 
@@ -68,4 +71,8 @@ if __name__ == '__main__':
     GPIO.setmode(GPIO.BCM)
     #Setup using a list of channels for output
     GPIO.setup(PUMPS.values(),GPIO.OUT,initial=GPIO.HIGH)
-    app.run(host='0.0.0.0',debug=True)
+    try:
+        app.run(host='0.0.0.0',debug=True)
+    except KeyboardInterrupt:
+        GPIO.cleanup()
+        sys.exit()
