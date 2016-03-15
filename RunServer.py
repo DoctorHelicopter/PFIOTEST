@@ -62,8 +62,10 @@ def delete_drink():
     return redirect('/')
     
 if __name__ == '__main__':
+    with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
+        PUMPS = json.loads(f.read())
     #Define board layout for channels
     GPIO.setmode(GPIO.BCM)
     #Setup using a list of channels for output
-    GPIO.setup(self.PUMPS.values(),GPIO.OUT,initial=GPIO.HIGH)
+    GPIO.setup(PUMPS.values(),GPIO.OUT,initial=GPIO.HIGH)
     app.run(host='0.0.0.0',debug=True)
