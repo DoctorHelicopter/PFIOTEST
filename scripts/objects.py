@@ -20,11 +20,11 @@ class Drink:
         
     def startup(self):
         print "Setting up GPIO pins..."
-        print self.PUMPS
+        print self.PUMPS.values()
         #Define board layout for channels
         GPIO.setmode(GPIO.BCM)
         #Setup using a list of channels for output
-        GPIO.setup(self.PUMPS.values(),GPIO.OUT)
+        GPIO.setup(self.PUMPS.values(),GPIO.OUT,initial=GPIO.HIGH)
             
     def close(self):
         print "Cleaning up pins..."
@@ -41,11 +41,11 @@ class Drink:
         for step in self.steps:
             go_time = self.SHOT_TIME*step[1]
             print "Pump %s ON" % step[0]
-            GPIO.output(self.PUMPS[step[0]],1)
+            GPIO.output(self.PUMPS[step[0]],GPIO.LOW)
             print "Wait %s" % go_time
             sleep(go_time)
-            print "Pump %s OFF" % step[0]
-            GPIO.output(self.PUMPS[step[0]],0)
+            print "Pump %s OFF" % self.PUMPS[step[0]]
+            GPIO.output(self.PUMPS[step[0]],GPIO.HIGH)
             sleep(1)
             
     def save(self,name):
