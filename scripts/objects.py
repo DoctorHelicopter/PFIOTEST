@@ -34,6 +34,9 @@ class Drink:
         self.steps = self.DRINK_LIST[drink]["ingredients"]
         
     def pour(self):
+        #at some point i want to make it overlap pours
+        #turn them all on
+        #then turn them off one at a time
         for step in self.steps:
             go_time = self.SHOT_TIME*step[1]
             print "Pump %s ON" % step[0]
@@ -42,7 +45,6 @@ class Drink:
             sleep(go_time)
             print "Pump %s OFF" % self.PUMPS[step[0]]
             GPIO.output(self.PUMPS[step[0]],GPIO.HIGH)
-            sleep(1)
             
     def save(self,name):
        lowername = name.replace(' ','').lower()

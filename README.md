@@ -22,3 +22,10 @@ Just run the following on your Pi:
 # apt-get install apache2 libapache2-mod-wsgi python-pip
 # pip install Flask RPi.GPIO
 ```
+
+TO-DO
+=====
+1. Update the page to be mobile-friendly
+2. Replace the lame drop-down with colorful badges
+3. Add a homepage, with other options?
+~* such as...music? should I add speakers?
