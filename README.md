@@ -3,9 +3,7 @@ PYDRINKBOT V0.2
 
 Introduction
 ------------
-<p>This project started as a keypad hooked up to an Arduino controlling some pumps, and I was like "yeah, that's lame."
-
-So I got a Raspberry Pi and hooked that up to the pumps instead. I'm using eight of the GPIO pins on the board, plus the 5v and a ground, hooked up to a solid state relay board with 8 relays. The relays are wired up with 12v power, and each one controls a peristaltic pump. This project is for the Flask server that controls all of that.</p> 
+<p>This project started as a keypad hooked up to an Arduino controlling some pumps, and I was like "yeah, that's lame." So I got a Raspberry Pi and hooked that up to the pumps instead. I'm using eight of the GPIO pins on the board, plus the 5v and a ground, hooked up to a solid state relay board with 8 relays. The relays are wired up with 12v power, and each one controls a peristaltic pump. This project is for the Flask server that controls all of that.</p> 
     
 Dependencies
 ------------
