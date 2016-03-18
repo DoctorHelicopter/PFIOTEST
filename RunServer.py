@@ -72,8 +72,8 @@ if __name__ == '__main__':
     #Setup using a list of channels for output
     GPIO.setup(PUMPS.values(),GPIO.OUT)#,initial=GPIO.HIGH)
     GPIO.output(PUMPS.values(),GPIO.HIGH)
-    try:
-        app.run(host='0.0.0.0',debug=True)
-    except KeyboardInterrupt:
-        GPIO.cleanup()
-        sys.exit()
+    #try:
+    #    app.run(host='0.0.0.0',debug=True)
+    #except KeyboardInterrupt:
+    #    GPIO.cleanup()
+    #    sys.exit()
