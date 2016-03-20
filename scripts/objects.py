@@ -1,4 +1,5 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
+import pigpio
 from time import sleep
 import json
 import os
@@ -24,7 +25,7 @@ class Drink:
             
     def close(self):
         print "Cleaning up pins..."
-        GPIO.cleanup()
+        #GPIO.cleanup()
         
     def add_step(self,liquor,time):
         #used in the manual creation of recipes
@@ -37,14 +38,17 @@ class Drink:
         #at some point i want to make it overlap pours
         #turn them all on
         #then turn them off one at a time
+	gpio = pigpio.pi()
         for step in self.steps:
             go_time = self.SHOT_TIME*step[1]
             print "Pump %s ON" % step[0]
-            GPIO.output(self.PUMPS[step[0]],GPIO.LOW)
+            #GPIO.output(self.PUMPS[step[0]],GPIO.LOW)
+	    gpio.write(self.PUMPS[step[0]],0)
             print "Wait %s" % go_time
             sleep(go_time)
             print "Pump %s OFF" % self.PUMPS[step[0]]
-            GPIO.output(self.PUMPS[step[0]],GPIO.HIGH)
+            #GPIO.output(self.PUMPS[step[0]],GPIO.HIGH)
+	    gpio.write(self.PUMPS[step[0]],1)
             
     def save(self,name):
        lowername = name.replace(' ','').lower()

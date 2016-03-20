@@ -3,12 +3,22 @@ from scripts.objects import Drink
 import os
 import sys
 import json
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
+import pigpio
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET','POST'])
 def index():
+    #if not GPIO.getmode():
+    #GPIO.setmode(GPIO.BCM)
+    with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
+        PUMPS = json.loads(f.read())
+    #GPIO.setup(PUMPS.values(),GPIO.OUT)
+    #GPIO.output(PUMPS.values(),GPIO.HIGH)
+    gpio = pigpio.pi()
+    for p in PUMPS.values():
+        gpio.write(p,1)
     if request.method == 'POST':
         drink = request.form.get('availabledrinks')
         print drink
@@ -64,14 +74,14 @@ def delete_drink():
         message = "Drink deleted!"
     return redirect('/')
     
-if __name__ == '__main__':
-    with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
-        PUMPS = json.loads(f.read())
+#if __name__ == '__main__':
+    #with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
+    #    PUMPS = json.loads(f.read())
     #Define board layout for channels
-    GPIO.setmode(GPIO.BCM)
+    #GPIO.setmode(GPIO.BCM)
     #Setup using a list of channels for output
-    GPIO.setup(PUMPS.values(),GPIO.OUT)#,initial=GPIO.HIGH)
-    GPIO.output(PUMPS.values(),GPIO.HIGH)
+    #GPIO.setup(PUMPS.values(),GPIO.OUT)#,initial=GPIO.HIGH)
+    #GPIO.output(PUMPS.values(),GPIO.HIGH)
     #try:
     #    app.run(host='0.0.0.0',debug=True)
     #except KeyboardInterrupt:
