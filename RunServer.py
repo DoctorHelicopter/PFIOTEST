@@ -4,21 +4,19 @@ import os
 import sys
 import json
 #import RPi.GPIO as GPIO
-import pigpio
+if os.uname()[1] == 'raspberrypi':
+    import pigpio
 app = Flask(__name__)
 
 
 @app.route('/', methods=['GET','POST'])
 def index():
-    #if not GPIO.getmode():
-    #GPIO.setmode(GPIO.BCM)
     with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
         PUMPS = json.loads(f.read())
-    #GPIO.setup(PUMPS.values(),GPIO.OUT)
-    #GPIO.output(PUMPS.values(),GPIO.HIGH)
-    gpio = pigpio.pi()
-    for p in PUMPS.values():
-        gpio.write(p,1)
+    if os.uname()[1] == 'raspberrypi':
+        gpio = pigpio.pi()
+        for p in PUMPS.values():
+            gpio.write(p,1)
     if request.method == 'POST':
         drink = request.form.get('availabledrinks')
         print drink
@@ -32,12 +30,10 @@ def index():
         try:
             print "Pouring..."
             d.pour()
-            #d.close()
             message = "Your drink is ready!"
         except Exception as ex:
             print "Error!"
             print ex
-            #d.close()
             message = "There was an error:", ex
     else:
         message = "Please choose a drink"
@@ -74,16 +70,12 @@ def delete_drink():
         message = "Drink deleted!"
     return redirect('/')
     
-#if __name__ == '__main__':
-    #with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
-    #    PUMPS = json.loads(f.read())
-    #Define board layout for channels
-    #GPIO.setmode(GPIO.BCM)
-    #Setup using a list of channels for output
-    #GPIO.setup(PUMPS.values(),GPIO.OUT)#,initial=GPIO.HIGH)
-    #GPIO.output(PUMPS.values(),GPIO.HIGH)
-    #try:
-    #    app.run(host='0.0.0.0',debug=True)
-    #except KeyboardInterrupt:
-    #    GPIO.cleanup()
-    #    sys.exit()
+if __name__ == '__main__':
+    with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
+        PUMPS = json.loads(f.read())
+    if os.uname()[1] == 'raspberrypi': #detect machine name
+        #only initialize if we're actually on a pi
+        gpio = pigpio.pi()
+        for p in PUMPS.values():
+            gpio.write(p,1)
+    app.run(host='0.0.0.0',debug=True)

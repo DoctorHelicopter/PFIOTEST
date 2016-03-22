@@ -1,8 +1,10 @@
-#import RPi.GPIO as GPIO
-import pigpio
 from time import sleep
 import json
 import os
+if os.uname()[1] == 'raspberrypi':
+    import pigpio
+    
+    
 class Drink:
     def __init__(self):
         self.steps = []
@@ -22,10 +24,6 @@ class Drink:
     def startup(self):
         print "Setting up GPIO pins..."
         print self.PUMPS.values()
-            
-    def close(self):
-        print "Cleaning up pins..."
-        #GPIO.cleanup()
         
     def add_step(self,liquor,time):
         #used in the manual creation of recipes
@@ -38,17 +36,18 @@ class Drink:
         #at some point i want to make it overlap pours
         #turn them all on
         #then turn them off one at a time
-	gpio = pigpio.pi()
+        if os.uname() == 'raspberrypi':
+	        gpio = pigpio.pi()
         for step in self.steps:
             go_time = self.SHOT_TIME*step[1]
             print "Pump %s ON" % step[0]
-            #GPIO.output(self.PUMPS[step[0]],GPIO.LOW)
-	    gpio.write(self.PUMPS[step[0]],0)
+            if os.uname() == 'raspberrypi':
+	            gpio.write(self.PUMPS[step[0]],0)
             print "Wait %s" % go_time
             sleep(go_time)
             print "Pump %s OFF" % self.PUMPS[step[0]]
-            #GPIO.output(self.PUMPS[step[0]],GPIO.HIGH)
-	    gpio.write(self.PUMPS[step[0]],1)
+            if os.uname() == 'raspberrypi':
+	            gpio.write(self.PUMPS[step[0]],1)
             
     def save(self,name):
        lowername = name.replace(' ','').lower()
