@@ -1,62 +1,69 @@
 {% extends "base.html" %}
 {% block content %}
     <p id="message">{{message}}</p>
-    <form id="menu" action="/" method="post">
-        <label>Available Drinks</label>
-        <br>
-        <select id="availabledrinks" name="availabledrinks" onchange="checkDrink()">
-        </select><br><br>
-        <div id="ingredients">
-            
-        </div>
-        <button id="submitdrink" type="submit" onclick="if ($('#availabledrinks').val()!='Custom') $('#message').text('Your drink is being prepared!');" hidden>Pour</input>
-        <button id="deletedrink" type="submit" formaction="/deletedrink" hidden>Delete</button>
-    </form>
+    <div id="drinks"></div>
 </BODY>
 
 <SCRIPT type="text/javascript">
+var drinks = [];
 $(document).ready(function() {
     var uri = "static/drinklist.json";
     $.getJSON(uri, crossDomain=true)
         .done(function (data) {
-            $('<option>', {text: "(Please select)"}).appendTo($('#availabledrinks'));
-            $('<option>', {text: "Custom"}).appendTo($('#availabledrinks'));
-            $.each(data, function(key, item) {
-                console.log(item);
-                $('<option>', {value: key, text: item.name}).appendTo($('#availabledrinks'));
+            drinks = data;
+            $.each(data, function(key, drink) {
+                var name = drink['name'];
+                var ingredients = drink['ingredients'];
+                $('#drinks').append('<div class="btn-group">\
+                                    <button type="button" class="btn btn-danger btn-block">'+name+'</button>\
+                                    <button type="button" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
+                                    <span class="caret"></span>\
+                                    <span class="sr-only">Toggle Dropdown</span>\
+                                    </button>\
+                                    <ul class="dropdown-menu">\
+                                    <li><a href="#" onclick="DrinkPour("'+key+'");">Pour</a></li>\
+                                    <li><a href="#" onclick="DrinkEdit("'+key+'");">Edit</a></li>\
+                                    <li><a href="#" onclick="DrinkDelete(\''+key+'\');">Delete</a></li>\
+                                    </ul>\
+                                    </div><br>'
+                                    );
             });
+            $('#drinks').append('<a href="/newcustom">\
+                                 <button type="button" class="btn btn-block btn-primary">\
+                                  Create</button></a>'
+                                );
         });
 });
 
-function checkDrink() {
-    $('#ingredients').empty();
-    $('#submitdrink').hide();
-    $('#deletedrink').hide();
-    var drink = $('#availabledrinks').val();
-    if (drink == 'Custom')
-    {
-        $('#submitdrink').text('Create');
-    }
-    else
-    {
-        $('#submitdrink').text('Pour');
-    }
-    if (drink != "(Please select)")
-    {
-        if (drink != "Custom")
-        {
-            var uri = "static/drinklist.json";
-            $.getJSON(uri, crossDomain=true)
-                .done(function (data) {
-                    $('<ul>', {id:"ingredientlist"}).appendTo($('#ingredients'));
-                    $.each(data[drink].ingredients, function(key, item) {
-                        $('<li>', {text: item[1] + ' shot(s) of ' + item[0]}).appendTo($('#ingredientlist'));
-                    });
-                });
+
+function DrinkPour(drink) {
+    $.ajax('pour_drink/'+drink,{
+        method: 'POST',
+        complete: function(data) {
+            console.log(data);
+            location.reload();
         }
-        $('#submitdrink').show();
-        $('#deletedrink').show();
-    }
+    });
+    
 }
+
+function DrinkEdit(drink) {
+    $.ajax('edit_drink/'+drink,{
+       method: 'POST',
+       data:  drinks        
+    });
+}
+
+function DrinkDelete(drink) {
+    $.ajax('delete_drink/'+drink,{
+        method: 'POST',
+        complete: function(data) {
+            console.log(data);
+            location.reload();
+        }
+    });
+}
+
+
 </SCRIPT>
 {% endblock %}

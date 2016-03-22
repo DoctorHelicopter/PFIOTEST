@@ -55,6 +55,14 @@ class Drink:
            self.DRINK_LIST[lowername] = {"name" : name,
                                          "ingredients" : self.steps}
            self.write()
+           return 1
+       return 0
+           
+    def update(self,name):
+        lowername = name.replace(' ','').lower()
+        self.DRINK_LIST[lowername] = {"name" : name,
+                                      "ingredients" : self.steps}
+        self.write() 
            
     def delete(self,name):
        lowername = name.replace(' ','').lower()
