@@ -6,6 +6,7 @@ import json
 try:
     if os.uname()[1] == 'raspberrypi':
         import pigpio
+        gpio = pigpio.pi()
 except AttributeError:
     pass
 app = Flask(__name__)
@@ -125,6 +126,7 @@ if __name__ == '__main__':
     try:
         if os.uname()[1] == 'raspberrypi':
             import pigpio
+            gpio = pigpio.pi()
             for p in PUMPS.values():
                 gpio.write(p,1)
     except AttributeError:
