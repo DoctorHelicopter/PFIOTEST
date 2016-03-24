@@ -1,25 +1,27 @@
 {% extends "base.html" %}
 {% block content %}
     <p id="message">{{message}}</p>
-    <form id="drink" action="/newcustom" method="post">
-        <label>Name:&nbsp<input type="text" name="name" required></label>
+    <form id="drink" action="/newcustom" method="post" class="form">
+        <label>Name:&nbsp<input type="text" name="name" class="form-control" required></label>
         <div id="ingredients">
             <p>
+                <div id="form-group">
                 <label for="ingredient">
-                    <select id="liquorlist" name="liquor">
+                    <select id="liquorlist" name="liquor" class="form-control">
                     </select>
-                    <input type="number" min="0" id="ingredient" name="shot" placeholder="# of shots" required />
+                    <input class="form-control" type="number" min="0" id="ingredient" name="shot" placeholder="# of shots" required />
                 </label>
+                </div>
             </p>
         </div>
-        <button type="button" id="addScnt">Add another ingredient</button>
+        <button type="button" class="btn" id="addScnt">Add another ingredient</button>
         <br>
-        <input type="submit">
+        <button type="submit" class="btn">Submit</button>
     </form>
 </BODY>
 <SCRIPT type="text/javascript">
 $(document).ready(function() {
-        var uri = "static/pumps.json";
+        var uri = "/static/pumps.json";
         var drinks = [];
         $.getJSON(uri, crossDomain=true)
             .done(function (data) {
@@ -33,14 +35,14 @@ $(document).ready(function() {
         
         $('#addScnt').on('click', function() {
                 var item = "ingredient" + i;
-                $(`<p>
-                        <label for="ingredient">
-                            <select id="`+item+`" name="liquor">
-                            </select>
-                            <input type="number" min="0" name="shot" placeholder="# of shots" required />
-                            <button type="button" onclick="$(this).parents('p').remove();">Remove</button>
-                        </label>
-                    </p>`).appendTo(scntDiv);
+                $(`<div class="form-group"><p>
+                    <label for="ingredient">
+                        <select id="`+item+`" name="liquor" class="form-control">
+                        </select>
+                        <input class="form-control" type="number" min="0" name="shot" placeholder="# of shots" required />
+                        <button type="button" class="btn" onclick="$(this).parents('p').remove();">Remove</button>
+                    </label></p>
+                    </div>`).appendTo(scntDiv);
                 PopulateDrinks(drinks, item);
                 i++;
                 return false;

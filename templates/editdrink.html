@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+    <p id="message">{{message}}</p>
+    <form id="drink" action='/edit_drink/{{drink_dict["name"]}}' method="post">
+        <label>Name:&nbsp<input type="text" name="name" value='{{drink_dict["name"]}}' class="form-control" required></label>
+        <div id="ingredients">
+        </div>
+        <button type="button" class="btn" id="addScnt">Add another ingredient</button>
+        <br>
+        <button type="submit" class="btn">Submit</button>
+    </form>
+</BODY>
+<SCRIPT type="text/javascript">
+$(document).ready(function() {
+        var uri = "/static/pumps.json";
+        var drinks = [];
+        $.getJSON(uri, crossDomain=true)
+            .done(function (data) {
+                $.each(data, function(key, item) {
+                    drinks.push(key);
+                });
+                PopulateDrinks(drinks, 'liquorlist','');
+        
+                var scntDiv = $('#ingredients');
+                var i = 1;
+                
+                $.each({{drink|safe}}['ingredients'], function(key, ingredient) {
+                    var item = "ingredient" + i.toString();
+                    $(`<div id="form-group"><p>
+                        <label for="ingredient">
+                            <select id="`+item+`" name="liquor" class="form-control">
+                            </select>
+                            <input class="form-control" type="number" min="0" id="ingredient" name="shot" value="`+ingredient[1]+`" required />
+                            <button type="button" class="btn" onclick="$(this).parents('p').remove();">Remove</button>
+                        </label></p>
+                        </div>`).appendTo(scntDiv);
+                    PopulateDrinks(drinks, item, ingredient[0]);
+                    i++;
+                });
+                $('#addScnt').on('click', function() {
+                        var item = "ingredient" + i;
+                        $(`<div class="form-group"><p>
+                            <label for="ingredient">
+                                <select id="`+item+`" name="liquor" class="form-control">
+                                </select>
+                                <input class="form-control" type="number" min="0" name="shot" placeholder="# of shots" required />
+                                <button type="button" class="btn" onclick="$(this).parents('p').remove();">Remove</button>
+                            </label></p>
+                            </div>`).appendTo(scntDiv);
+                        PopulateDrinks(drinks, item, '');
+                        i++;
+                        return false;
+                });
+        });
+});
+
+function PopulateDrinks(drinks,id,selected) {
+    console.log(drinks, id, selected);
+    $(id).empty();
+    $.each(drinks, function(key, item) {
+        if (item == selected) sel = true;
+        else sel=false;
+       $('<option>',{value: item, text: item, selected:sel}).appendTo("#"+id);
+    });
+}
+
+</SCRIPT>
+{% endblock %}

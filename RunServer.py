@@ -3,9 +3,11 @@ from scripts.objects import Drink
 import os
 import sys
 import json
-#import RPi.GPIO as GPIO
-if os.uname()[1] == 'raspberrypi':
-    import pigpio
+try:
+    if os.uname()[1] == 'raspberrypi':
+        import pigpio
+except AttributeError:
+    pass
 app = Flask(__name__)
 
 
@@ -13,10 +15,13 @@ app = Flask(__name__)
 def index():
     with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
         PUMPS = json.loads(f.read())
-    if os.uname()[1] == 'raspberrypi':
-        gpio = pigpio.pi()
-        for p in PUMPS.values():
-            gpio.write(p,1)
+    try:
+        if os.uname()[1] == 'raspberrypi':
+            import pigpio
+            for p in PUMPS.values():
+                gpio.write(p,1)
+    except AttributeError:
+        pass
     if request.method == 'POST':
         drink = request.form.get('availabledrinks')
         print drink
@@ -65,7 +70,7 @@ def edit_drink(drink):
     if request.method == 'GET':
         #get the current drink
         d = Drink()
-        return render_template('editdrink.html',drink=d.DRINK_LIST[drink])
+        return render_template('editdrink.html',drink=json.dumps(d.DRINK_LIST[drink]), drink_dict=d.DRINK_LIST[drink])
     elif request.method == 'POST':
         steps = []
         name = request.form.get('name')
@@ -73,7 +78,7 @@ def edit_drink(drink):
         shots = request.form.getlist('shot')
         if len(liquors) != len(shots):
             message = "Invalid entry"
-            return render_template('editdrink.html',message=message)
+            return render_template('editdrink.html',message=message,drink=json.dumps(d.DRINK_LIST[drink]), drink_dict=d.DRINK_LIST[drink])
         d = Drink()
         for i in range(len(liquors)):
             d.add_step(liquors[i],int(shots[i]))
@@ -117,10 +122,13 @@ def newcustom():
 if __name__ == '__main__':
     with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
         PUMPS = json.loads(f.read())
-    if os.uname()[1] == 'raspberrypi': #detect machine name
-        #only initialize if we're actually on a pi
-        gpio = pigpio.pi()
-        for p in PUMPS.values():
-            gpio.write(p,1)
+    try:
+        if os.uname()[1] == 'raspberrypi':
+            import pigpio
+            for p in PUMPS.values():
+                gpio.write(p,1)
+    except AttributeError:
+        pass
+        
     app.run(host='0.0.0.0',debug=True)
     

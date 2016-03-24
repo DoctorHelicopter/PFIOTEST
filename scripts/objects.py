@@ -1,8 +1,11 @@
 from time import sleep
 import json
 import os
-if os.uname()[1] == 'raspberrypi':
-    import pigpio
+try:
+    if os.uname()[1] == 'raspberrypi':
+        import pigpio
+except AttributeError:
+    pass
     
     
 class Drink:
@@ -36,17 +39,21 @@ class Drink:
         #at some point i want to make it overlap pours
         #turn them all on
         #then turn them off one at a time
-        if os.uname() == 'raspberrypi':
-	        gpio = pigpio.pi()
+        try:
+            if os.uname() == 'raspberrypi':
+                gpio = pigpio.pi()
+                flag = 1
+        except AttributeError:
+            flag = 0
         for step in self.steps:
             go_time = self.SHOT_TIME*step[1]
             print "Pump %s ON" % step[0]
-            if os.uname() == 'raspberrypi':
+            if flag:
 	            gpio.write(self.PUMPS[step[0]],0)
             print "Wait %s" % go_time
             sleep(go_time)
             print "Pump %s OFF" % self.PUMPS[step[0]]
-            if os.uname() == 'raspberrypi':
+            if flag:
 	            gpio.write(self.PUMPS[step[0]],1)
             
     def save(self,name):

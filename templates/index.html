@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    <p id="message">{{message}}</p>
-    <div id="drinks"></div>
+    <center>
+        <p id="message">{{message}}</p>
+        <div id="drinks"></div>
+    </center>
 </BODY>
 
 <SCRIPT type="text/javascript">
@@ -14,23 +16,20 @@ $(document).ready(function() {
             $.each(data, function(key, drink) {
                 var name = drink['name'];
                 var ingredients = drink['ingredients'];
-                $('#drinks').append('<div class="btn-group">\
-                                    <button type="button" class="btn btn-danger btn-block">'+name+'</button>\
-                                    <button type="button" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">\
-                                    <span class="caret"></span>\
-                                    <span class="sr-only">Toggle Dropdown</span>\
-                                    </button>\
-                                    <ul class="dropdown-menu">\
-                                    <li><a href="#" onclick="DrinkPour("'+key+'");">Pour</a></li>\
-                                    <li><a href="#" onclick="DrinkEdit("'+key+'");">Edit</a></li>\
-                                    <li><a href="#" onclick="DrinkDelete(\''+key+'\');">Delete</a></li>\
-                                    </ul>\
-                                    </div><br>'
+                $('#drinks').append(`<div class="btn-group"> <button type="button" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`+name+`
+                                    <span class="caret"></span>
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="#" onclick="DrinkPour('`+key+`');">Pour</a></li>
+                                    <li><a href="/edit_drink/`+key+`">Edit</a></li>
+                                    <li><a href="#" onclick="DrinkDelete('`+key+`');">Delete</a></li>
+                                    </ul></div><br>`
                                     );
             });
-            $('#drinks').append('<a href="/newcustom">\
-                                 <button type="button" class="btn btn-block btn-primary">\
-                                  Create</button></a>'
+            $('#drinks').append(`<a href="/newcustom">
+                                 <button type="button" class="btn btn-primary">
+                                  Create</button></a>`
                                 );
         });
 });
@@ -49,8 +48,7 @@ function DrinkPour(drink) {
 
 function DrinkEdit(drink) {
     $.ajax('edit_drink/'+drink,{
-       method: 'POST',
-       data:  drinks        
+       method: 'GET'     
     });
 }
 

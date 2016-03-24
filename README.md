@@ -1,4 +1,4 @@
-PYDRINKBOT V0.2
+PYDRINKBOT V0.3
 ===============
 
 Introduction
@@ -11,7 +11,7 @@ Dependencies
 ~*It needs to connect to your home network. You can get an adapter, or use a Pi 3.
 2. Python 2.7.6+, and the following modules:
 ~1. Flask (and dependencies)
-~2. RPi.GPIO (note: this only works on the Pi, can't be tested on another machine)
+~2. pigpio (only necessary on the Pi - the pigpiod daemon will not run on anything else)
 3. Apache 2
 
 ```
@@ -20,12 +20,12 @@ Just run the following on your Pi:
 # apt-get update
 # apt-get upgrade
 # apt-get install apache2 libapache2-mod-wsgi python-pip
-# pip install Flask RPi.GPIO
+# pip install Flask pigpio
+# pigpiod
 ```
 
 TO-DO
 =====
-1. Update the page to be mobile-friendly
-2. Replace the lame drop-down with colorful badges
-3. Add a homepage, with other options?
+1. Replace the lame drop-down with colorful badges
+2. Add a homepage, with other options?
 ~* such as...music? should I add speakers?
