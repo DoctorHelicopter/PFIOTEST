@@ -142,11 +142,13 @@ def newcustom():
     
     
 if __name__ == '__main__':
-    with open(os.path.join(os.getcwd(),'static/shows.json'),'r') as f:
+    with open(os.path.join(os.getcwd(),'static/showlist.json'),'r') as f:
         SHOWS = json.loads(f.read())
     try:
         if os.uname()[1] == 'raspberrypi':
-            pass
+            import bibliopixel as bp
+            s = Show()
+            s.start_show('default', 'all')
             #import pigpio
             #gpio = pigpio.pi()
             #for p in PUMPS.values():
