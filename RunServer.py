@@ -7,6 +7,7 @@ try:
     if os.uname()[1] == 'raspberrypi':
         import bibliopixel as bp
         import bibliopixel.drivers.LPD8806 as LPD
+        from bibliopixel.animation import *
         s = Show()
         s.start_show('default', 'all')
         #import pigpio
@@ -149,6 +150,7 @@ if __name__ == '__main__':
         if os.uname()[1] == 'raspberrypi':
             import bibliopixel as bp
             import bibliopixel.drivers.LPD8806 as LPD
+            from bibliopixel.animation import *
             s = Show()
             s.start_show('default', 'all')
             #import pigpio
