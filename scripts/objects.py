@@ -5,6 +5,7 @@ try:
     if os.uname()[1] == 'raspberrypi':
         import bibliopixel as bp
         import bibliopixel.drivers.LPD8806 as LPD
+        from bibliopixel.animation import *
         import anims
 except AttributeError:
     pass
