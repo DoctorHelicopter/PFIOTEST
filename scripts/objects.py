@@ -41,10 +41,10 @@ class Show:
             lights = [light_name]
             
         for light in lights:
-            anim = self.get_anim(show)(light)
+            anim = self.get_anim(show)
             print anim
             #try:
-            anim.run()
+            anim(light).run()
             print "Show started."
             #except Exception as ex:
             #    print ex
