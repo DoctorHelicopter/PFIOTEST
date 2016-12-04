@@ -21,7 +21,7 @@ class Show:
         #lights.json maps light strips (by name)
         #to GPIO pins
         with open(os.path.join(os.getcwd(),'static/lights.json'),'r') as f:
-            for name, light in json.loads(f.read()):
+            for name, light in json.loads(f.read()).iteritems():
                 self.LIGHTS[name] = bp.LEDStrip(bp.drivers.LPD8806.DriverLPD8806(light['size'], dev = light['path']), threadedUpdate = True, masterBrightness = 126, pixelWidth = 1)
         #self.startup()
         
