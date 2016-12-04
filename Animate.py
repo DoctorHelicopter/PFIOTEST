@@ -4,7 +4,7 @@ import sys
 
 def main(args):
     strips = args[1].split(',')
-    shows = args[2].split(',')        
+    shows = args[2].split(',')
     
     strip_list = [setup_strip(STRIPS[name]) for name in strips]
     show_list = [SHOWS[name] for name in shows]
@@ -19,6 +19,7 @@ def main(args):
 def setup_strip(strip):
     s = Adafruit_NeoPixel(strip['LED_COUNT'], strip['LED_PIN'], strip['LED_FREQ_HZ'], strip['LED_DMA'], strip['LED_INVERT'])
     s.begin()
+    s.setBrightness(100)
     return s
         
         
@@ -26,16 +27,25 @@ def ColorWipe(strip):
     for color in [Color(255,0,0), Color(0,255,0), Color(0,0,255)]:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, color)
-            strip.setBrightness(126)
             strip.show()
             time.sleep(.001)
+    
             
 def BlueChase(strip):
-    color1 = Color(0,0,150)
+    color1 = Color(0,0,100)
     color2 = Color(0,0,200)
     cycles = 5
     
     ColorChase(strip, color1, color2, cycles)
+    
+ 
+def GreenChase(strip):
+    color1 = Color(0,100,0)
+    color2 = Color(50,255,0)
+    cycles = 3
+    
+    ColorChase(strip, color1, color2, cycles)
+    
     
 def ColorChase(strip, color1, color2, cycles):
     for i in range(strip.numPixels()):
@@ -46,8 +56,7 @@ def ColorChase(strip, color1, color2, cycles):
             strip.setPixelColor(i+1, color2)
             strip.setPixelColor(i, color1)
             strip.show()
-            time.sleep(.001)
-            
+            time.sleep(.001)        
 
         
 STRIPS = {"Ring" : {
