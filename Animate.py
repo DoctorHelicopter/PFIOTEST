@@ -3,8 +3,8 @@ import time
 import sys
 
 def main(args):
-    strips = args[1]
-    shows = args[2]        
+    strips = args[1].split(',')
+    shows = args[2].split(',')        
     
     strip_list = [setup_strip(STRIPS[name]) for name in strips]
     show_list = [SHOWS[name] for name in shows]
