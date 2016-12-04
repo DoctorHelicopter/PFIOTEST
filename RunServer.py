@@ -5,8 +5,11 @@ import sys
 import json
 try:
     if os.uname()[1] == 'raspberrypi':
-        import pigpio
-        gpio = pigpio.pi()
+        import bibiopixel as bp
+        s = Show()
+        s.start_show('default', 'all')
+        #import pigpio
+        #gpio = pigpio.pi()
 except AttributeError:
     pass
 app = Flask(__name__)
@@ -14,57 +17,75 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET','POST'])
 def index():
-    with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
-        PUMPS = json.loads(f.read())
+    #with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
+    #    PUMPS = json.loads(f.read())
     try:
         if os.uname()[1] == 'raspberrypi':
-            import pigpio
-            for p in PUMPS.values():
-                gpio.write(p,1)
-    except AttributeError:
-        pass
-    if request.method == 'POST':
-        drink = request.form.get('availabledrinks')
-        print drink
-        d = Drink()
-        if drink == 'Custom':
-            return redirect(url_for('newcustom'))
-        else:
-            d.get_steps(drink)
-            
-        print d.steps
-        try:
-            print "Pouring..."
-            d.pour()
-            message = "Your drink is ready!"
-        except Exception as ex:
-            print "Error!"
-            print ex
-            message = "There was an error:", ex
-    else:
-        message = "Please choose a drink"
+            message = "Please choose a show"
+            #import pigpio
+            #for p in PUMPS.values():
+            #    gpio.write(p,1)
+    except AttributeError as ex:
+        message = ex
+    #if request.method == 'POST':
+    #    drink = request.form.get('availabledrinks')
+    #    print drink
+    #    d = Drink()
+    #    if drink == 'Custom':
+    #        return redirect(url_for('newcustom'))
+    #    else:
+    #        d.get_steps(drink)
+    #        
+    #    print d.steps
+    #    try:
+    #        print "Pouring..."
+    #        d.pour()
+    #        message = "Your drink is ready!"
+    #    except Exception as ex:
+    #        print "Error!"
+    #        print ex
+    #        message = "There was an error:", ex
     return render_template('index.html',message=message)
     
     
-@app.route('/pour_drink/<drink>', methods=['POST'])
-def pour_drink(drink):
-    print drink
-    d = Drink()
-    d.get_steps(drink)
-    print d.steps
+#@app.route('/pour_drink/<drink>', methods=['POST'])
+#def pour_drink(drink):
+#    print drink
+#    d = Drink()
+#    d.get_steps(drink)
+#    print d.steps
+#    try:
+#        print "Pouring..."
+#        d.pour()
+#        message = "Your drink is ready!"
+#        code = 200
+#    except Exception as ex:
+#        print "Error!"
+#        print ex
+#        message = "There was an error:", ex
+#        code = 500
+#    return message, code
+
+@app.route('/start_show/<show>', methods=['POST']):
+def start_show(show):
+    print show
+    s = Show()
     try:
-        print "Pouring..."
-        d.pour()
-        message = "Your drink is ready!"
+        print "Starting %s..." % show
+        #If all is successful, this won't ever return.
+        #The template should have already moved on and refreshed
+        s.start_show(show, 'all')
+        message = "Started"
         code = 200
     except Exception as ex:
         print "Error!"
         print ex
         message = "There was an error:", ex
         code = 500
+    print message, code
     return message, code
-    
-    
+        
+        
 @app.route('/edit_drink/<drink>', methods=['GET','POST'])
 def edit_drink(drink):
     print drink
@@ -121,14 +142,15 @@ def newcustom():
     
     
 if __name__ == '__main__':
-    with open(os.path.join(os.getcwd(),'static/pumps.json'),'r') as f:
-        PUMPS = json.loads(f.read())
+    with open(os.path.join(os.getcwd(),'static/shows.json'),'r') as f:
+        SHOWS = json.loads(f.read())
     try:
         if os.uname()[1] == 'raspberrypi':
-            import pigpio
-            gpio = pigpio.pi()
-            for p in PUMPS.values():
-                gpio.write(p,1)
+            pass
+            #import pigpio
+            #gpio = pigpio.pi()
+            #for p in PUMPS.values():
+            #    gpio.write(p,1)
     except AttributeError:
         pass
         

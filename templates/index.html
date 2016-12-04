@@ -2,41 +2,39 @@
 {% block content %}
     <center>
         <p id="message">{{message}}</p>
-        <div id="drinks"></div>
+        <div id="shows"></div>
     </center>
 </BODY>
 
 <SCRIPT type="text/javascript">
-var drinks = [];
+var shows = [];
 $(document).ready(function() {
-    var uri = "static/drinklist.json";
+    var uri = "static/showlist.json";
     $.getJSON(uri, crossDomain=true)
         .done(function (data) {
-            drinks = data;
+            show = data;
             $.each(data, function(key, drink) {
-                var name = drink['name'];
-                var ingredients = drink['ingredients'];
-                $('#drinks').append(`<div class="btn-group"> <button type="button" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`+name+`
+                var name = show['name'];
+                var steps = show['steps'];
+                $('#shows').append(`<div class="btn-group"> <button type="button" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`+name+`
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
-                                    <li><a href="#" onclick="DrinkPour('`+key+`');">Pour</a></li>
-                                    <li><a href="/edit_drink/`+key+`">Edit</a></li>
-                                    <li><a href="#" onclick="DrinkDelete('`+key+`');">Delete</a></li>
+                                    <li><a href="#" onclick="StartShow('`+key+`');">Start Show</a></li>
                                     </ul></div><br>`
                                     );
             });
-            $('#drinks').append(`<a href="/newcustom">
+            /*$('#drinks').append(`<a href="/newcustom">
                                  <button type="button" class="btn btn-primary">
                                   Create</button></a>`
-                                );
+                                );*/
         });
 });
 
 
-function DrinkPour(drink) {
-    $.ajax('pour_drink/'+drink,{
+function StartShow(show) {
+    $.ajax('start_show/'+show,{
         method: 'POST',
         complete: function(data) {
             console.log(data);
@@ -46,7 +44,7 @@ function DrinkPour(drink) {
     
 }
 
-function DrinkEdit(drink) {
+/*function DrinkEdit(drink) {
     $.ajax('edit_drink/'+drink,{
        method: 'GET'     
     });
@@ -60,7 +58,7 @@ function DrinkDelete(drink) {
             location.reload();
         }
     });
-}
+}*/
 
 
 </SCRIPT>

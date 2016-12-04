@@ -1,0 +1,4 @@
+{
+    "default" : bp.Animation.StripChannelTest,
+    "Show 1" : anims.Show1
+}
