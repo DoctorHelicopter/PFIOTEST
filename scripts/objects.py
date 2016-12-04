@@ -43,12 +43,12 @@ class Show:
         for light in lights:
             anim = self.get_anim(show)(light)
             print anim
-            try:
-                anim.run()
-                print "Show started."
-            except Exception as ex:
-                print ex
-                status = False  
+            #try:
+            anim.run()
+            print "Show started."
+            #except Exception as ex:
+            #    print ex
+            #    status = False  
         return status
                 
     def get_anim(self, show):

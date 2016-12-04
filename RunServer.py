@@ -144,21 +144,21 @@ def newcustom():
     
     
 if __name__ == '__main__':
-    with open(os.path.join(os.getcwd(),'static/showlist.json'),'r') as f:
-        SHOWS = json.loads(f.read())
-    try:
-        if os.uname()[1] == 'raspberrypi':
-            import bibliopixel as bp
-            import bibliopixel.drivers.LPD8806 as LPD
-            from bibliopixel.animation import *
-            s = Show()
-            s.start_show('default', 'all')
-            #import pigpio
-            #gpio = pigpio.pi()
-            #for p in PUMPS.values():
-            #    gpio.write(p,1)
-    except AttributeError as ex:
-        print ex
+    #with open(os.path.join(os.getcwd(),'static/showlist.json'),'r') as f:
+    #    SHOWS = json.loads(f.read())
+    #try:
+    #    if os.uname()[1] == 'raspberrypi':
+    #        import bibliopixel as bp
+    #        import bibliopixel.drivers.LPD8806 as LPD
+    #        from bibliopixel.animation import *
+    #        s = Show()
+    #        s.start_show('default', 'all')
+    #        #import pigpio
+    #        #gpio = pigpio.pi()
+    #        #for p in PUMPS.values():
+    #        #    gpio.write(p,1)
+    #except AttributeError as ex:
+    #    print ex
         
     app.run(host='0.0.0.0',debug=True)
     
