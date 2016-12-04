@@ -42,6 +42,7 @@ class Show:
             
         for light in lights:
             anim = self.get_anim(show)(light)
+            print anim
             try:
                 anim.run()
                 print "Show started."
@@ -52,7 +53,9 @@ class Show:
                 
     def get_anim(self, show):
         print "Getting animation: %s" % show
-        return eval(self.SHOW_LIST[show])
+        ret = eval(self.SHOW_LIST[show])
+        print ret
+        return ret
                       
         
         
