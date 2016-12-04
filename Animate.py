@@ -69,7 +69,8 @@ STRIPS = {"Ring" : {
         }
 SHOWS = {
     "ColorWipe" : ColorWipe,
-    "BlueChase" : BlueChase
+    "BlueChase" : BlueChase,
+    "GreenChase" : GreenChase
     }  
 
 if __name__=="__main__":
