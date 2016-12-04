@@ -3,9 +3,7 @@ import json
 import os
 try:
     if os.uname()[1] == 'raspberrypi':
-        import bibliopixel as bp
-        import bibliopixel.drivers.LPD8806 as LPD
-        from bibliopixel.animation import *
+        from neopixel import *
         import anims
 except AttributeError:
     pass
@@ -16,45 +14,50 @@ class Show:
         self.steps = []
         #1 second per step 
         #to be used as delay time after each step
-        self.STEP_DELAY = 4 
-        self.LIGHTS = {}
-        #showlist.json should be prefilled with your show configurations
-        with open(os.path.join(os.getcwd(),'static/showlist.json'),'r') as f:
-            self.SHOW_LIST = json.loads(f.read())
-        #lights.json maps light strips (by name)
-        #to GPIO pins
-        with open(os.path.join(os.getcwd(),'static/lights.json'),'r') as f:
-            for name, light in json.loads(f.read()).iteritems():
-                self.LIGHTS[name] = bp.LEDStrip(LPD.DriverLPD8806(light['size'], dev = light['path']), threadedUpdate = True, masterBrightness = 126, pixelWidth = 1)
-        print self.SHOW_LIST
-        print self.LIGHTS
+        self.STEP_DELAY = 1 
+        self.STRIPS = {"ring" : {
+                                    "LED_COUNT"   : 24,      # Number of LED pixels.
+                                    "LED_PIN"     : 18,      # GPIO pin connected to the pixels (must support PWM!).
+                                    "LED_FREQ_HZ" : 800000,  # LED signal frequency in hertz (usually 800khz)
+                                    "LED_DMA"     : 5,       # DMA channel to use for generating signal (try 5)
+                                    "LED_INVERT"  : False,   # True to invert the signal (when using NPN transistor level shift)
+                                }
+                      }
+        self.ANIMATIONS = [
+            (anims.default, Color(0,255,255))
+            (anims.default, Color(255,255,0))
+        ]
+        print self.ANIMATONS
+        print self.STEIPS
         #self.startup()
         
     def startup(self):
         print "Setting up GPIO pins..."
         
-    def start_show(self, show, light_name):
+    def start_show(self, show, strips=self.STRIPS.keys()):
         status = True
-        if light_name == 'all':
-            lights = self.LIGHTS.keys()
-        else:
-            lights = [light_name]
-            
-        for light in lights:
-            anim = self.get_anim(show)
-            print anim
-            #try:
-            anim(light).run()
-            print "Show started."
-            #except Exception as ex:
-            #    print ex
-            #    status = False  
+        strip_list = []
+        for strip in strips:
+            s = self.setup_strip(self.STRIPS[strip])
+            strip_list.append(s)
+        print "Show started."
+        print "Press Ctrl+C to stop."
+        while status:
+            for s in strip_list:
+                print s
+                #try:
+                #anim(light).run()
+                for anim in self.ANIMATIONS:
+                    anim[0](s, anim[1])
+                #except Exception as ex:
+                #    print ex
+                #    status = False  
         return status
                 
-    def get_anim(self, show):
-        print "Getting animation: %s" % show
-        ret = eval(self.SHOW_LIST[show])
-        return ret
+    def setup_strip(self, strip):
+        s = Adafruit_Neopixel(strip['LED_COUNT'], strip['LED_PIN'], strip['LED_FREQ_HZ'], strip['LED_DMA'], strip['LED_INVERT'])
+        s.begin()
+        return s
                       
         
         
