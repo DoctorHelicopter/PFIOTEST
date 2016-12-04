@@ -46,6 +46,7 @@ def ColorChase(strip, color1, color2, cycles):
             strip.setPixelColor(i+1, color2)
             strip.setPixelColor(i, color1)
             strip.show()
+            time.sleep(.001)
             
 
         
