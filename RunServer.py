@@ -153,8 +153,8 @@ if __name__ == '__main__':
             #gpio = pigpio.pi()
             #for p in PUMPS.values():
             #    gpio.write(p,1)
-    except AttributeError:
-        pass
+    except AttributeError as ex:
+        print ex
         
     app.run(host='0.0.0.0',debug=True)
     
