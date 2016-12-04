@@ -4,6 +4,7 @@ import os
 try:
     if os.uname()[1] == 'raspberrypi':
         import bibliopixel as bp
+        import bibliopixel.drivers.LPD8806 as LPD
         import anims
 except AttributeError:
     pass
@@ -22,7 +23,7 @@ class Show:
         #to GPIO pins
         with open(os.path.join(os.getcwd(),'static/lights.json'),'r') as f:
             for name, light in json.loads(f.read()).iteritems():
-                self.LIGHTS[name] = bp.LEDStrip(bp.drivers.LPD8806.DriverLPD8806(light['size'], dev = light['path']), threadedUpdate = True, masterBrightness = 126, pixelWidth = 1)
+                self.LIGHTS[name] = bp.LEDStrip(LPD.DriverLPD8806(light['size'], dev = light['path']), threadedUpdate = True, masterBrightness = 126, pixelWidth = 1)
         #self.startup()
         
     def startup(self):

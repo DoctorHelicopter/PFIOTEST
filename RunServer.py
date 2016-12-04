@@ -6,6 +6,7 @@ import json
 try:
     if os.uname()[1] == 'raspberrypi':
         import bibliopixel as bp
+        import bibliopixel.drivers.LPD8806 as LPD
         s = Show()
         s.start_show('default', 'all')
         #import pigpio
@@ -147,6 +148,7 @@ if __name__ == '__main__':
     try:
         if os.uname()[1] == 'raspberrypi':
             import bibliopixel as bp
+            import bibliopixel.drivers.LPD8806 as LPD
             s = Show()
             s.start_show('default', 'all')
             #import pigpio
