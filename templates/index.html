@@ -13,9 +13,8 @@ $(document).ready(function() {
     $.getJSON(uri, crossDomain=true)
         .done(function (data) {
             show = data;
-            $.each(data, function(key, drink) {
-                var name = show['name'];
-                var steps = show['steps'];
+            $.each(data, function(key, show) {
+                var name = key;
                 $('#shows').append(`<div class="btn-group"> <button type="button" class="btn btn-danger btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">`+name+`
                                     <span class="caret"></span>
                                     <span class="sr-only">Toggle Dropdown</span>
