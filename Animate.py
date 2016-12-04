@@ -35,14 +35,21 @@ def ColorWipe(strip):
 def BlueChase(strip):
     color1 = Color(0,0,100)
     color2 = Color(0,0,200)
-    cycles = 5
+    cycles = 3
     
     ColorChase(strip, color1, color2, cycles)
     
  
-def GreenChase(strip):
+def RedChase(strip):
     color1 = Color(0,100,0)
     color2 = Color(50,255,0)
+    cycles = 3
+    
+    ColorChase(strip, color1, color2, cycles)
+ 
+def GreenChase(strip):
+    color1 = Color(100,0,0)
+    color2 = Color(255,50,0)
     cycles = 3
     
     ColorChase(strip, color1, color2, cycles)
@@ -71,7 +78,8 @@ STRIPS = {"Ring" : {
 SHOWS = {
     "ColorWipe" : ColorWipe,
     "BlueChase" : BlueChase,
-    "GreenChase" : GreenChase
+    "GreenChase" : GreenChase,
+    "RedChase" : RedChase
     }  
 
 if __name__=="__main__":
