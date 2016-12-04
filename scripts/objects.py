@@ -30,7 +30,7 @@ class Show:
         
     def start_show(self, show, light_name):
         status = True
-        if light_name = 'all':
+        if light_name == 'all':
             lights = self.LIGHTS.keys()
         else:
             lights = [light_name]
