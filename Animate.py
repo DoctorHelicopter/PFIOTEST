@@ -11,10 +11,15 @@ def main(args):
     print "Starting..."
     print "Press Ctrl+C to stop."
     while True:
-        for show in show_list:
-            for strip in strip_list:
-                show(strip)
-        
+        try:
+            for show in show_list:
+                for strip in strip_list:
+                    show(strip)
+        except KeyboardInterrupt:
+            for s in strip_list:
+                del(s)
+    print "Done"
+            
  
 def setup_strip(strip):
     s = Adafruit_NeoPixel(strip['LED_COUNT'], strip['LED_PIN'], strip['LED_FREQ_HZ'], strip['LED_DMA'], strip['LED_INVERT'])
