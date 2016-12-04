@@ -13,7 +13,7 @@ def main(args):
     while True:
         for show in show_list:
             for strip in strip_list:
-                SHOWS[show](strip)
+                show(strip)
         
  
 def setup_strip(strip):
