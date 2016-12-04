@@ -1,5 +1,6 @@
 from neopixel import *
 import time
+import sys
 
 def main(args):
     strips = args[1]
