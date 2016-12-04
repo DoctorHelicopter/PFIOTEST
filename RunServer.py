@@ -66,7 +66,7 @@ def index():
 #        code = 500
 #    return message, code
 
-@app.route('/start_show/<show>', methods=['POST']):
+@app.route('/start_show/<show>', methods=['POST'])
 def start_show(show):
     print show
     s = Show()
