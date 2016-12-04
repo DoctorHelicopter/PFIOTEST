@@ -47,7 +47,7 @@ class Show:
                 
     def get_anim(self, show):
         print "Getting animation: %s" % show
-        return self.SHOW_LIST[show]
+        return eval(self.SHOW_LIST[show])
                       
         
         
