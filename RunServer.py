@@ -5,7 +5,7 @@ import sys
 import json
 try:
     if os.uname()[1] == 'raspberrypi':
-        import bibiopixel as bp
+        import bibliopixel as bp
         s = Show()
         s.start_show('default', 'all')
         #import pigpio

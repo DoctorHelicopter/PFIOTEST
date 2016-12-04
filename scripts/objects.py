@@ -3,7 +3,7 @@ import json
 import os
 try:
     if os.uname()[1] == 'raspberrypi':
-        import bibiopixel as bp
+        import bibliopixel as bp
         import anims
 except AttributeError:
     pass
