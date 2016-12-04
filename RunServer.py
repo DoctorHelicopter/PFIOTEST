@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_from_directory, url_for, redirect
-from scripts.objects import Drink
+from scripts.objects import Show
 import os
 import sys
 import json
