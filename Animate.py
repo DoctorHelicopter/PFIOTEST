@@ -1,4 +1,3 @@
-from objects import Show
 from neopixel import *
 import time
 
