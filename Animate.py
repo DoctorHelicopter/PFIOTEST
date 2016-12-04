@@ -66,11 +66,12 @@ def StarChase(strip, color1, color2, cycles):
         strip.setPixelColor(i, color1)
     strip.show()
     for c in range(cycles):
-        for i in range(6):
-            strip.setPixelColor(((i / 6) * strip.numPixels()) + 1,color2)
-            strip.setPixelColor((i / 6) * strip.numPixels(),color2)
-            strip.show()
-            time.sleep(.001)
+        for j in range(strip.numPixels()):
+            for i in range(6):
+                strip.setPixelColor(((j / i) * strip.numPixels()) + 1,color2)
+                strip.setPixelColor((j / i) * strip.numPixels(),color2)
+                strip.show()
+                time.sleep(.001)
     
     
 def ColorChase(strip, color1, color2, cycles):
