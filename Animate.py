@@ -17,7 +17,7 @@ def main(args):
         
  
 def setup_strip(strip):
-    s = Adafruit_Neopixel(strip['LED_COUNT'], strip['LED_PIN'], strip['LED_FREQ_HZ'], strip['LED_DMA'], strip['LED_INVERT'])
+    s = Adafruit_NeoPixel(strip['LED_COUNT'], strip['LED_PIN'], strip['LED_FREQ_HZ'], strip['LED_DMA'], strip['LED_INVERT'])
     s.begin()
     return s
         
