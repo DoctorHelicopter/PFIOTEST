@@ -11,13 +11,9 @@ def main(args):
     print "Starting..."
     print "Press Ctrl+C to stop."
     while True:
-        try:
-            for show in show_list:
-                for strip in strip_list:
-                    show(strip)
-        except KeyboardInterrupt:
-            for s in strip_list:
-                del(s)
+        for show in show_list:
+            for strip in strip_list:
+                show(strip)
     print "Done"
             
  
