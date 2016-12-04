@@ -26,8 +26,11 @@ def ColorWipe(strip):
     for color in [Color(255,0,0), Color(0,255,0), Color(0,0,255)]:
         for i in range(strip.numPixels()):
             strip.setPixelColor(i, color)
+            strip.setBrightess(126)
             strip.show()
             time.sleep(.001)
+            
+
         
 STRIPS = {"Ring" : {
                     "LED_COUNT"   : 24,      # Number of LED pixels.
