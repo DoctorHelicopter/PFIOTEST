@@ -1,5 +1,3 @@
 {
-    //Fix this when I have the pins in
-    //"strip" : {"size" : 30, "path" : ""},
     "ring" : {"size" : 24, "path" : ""}
 }
