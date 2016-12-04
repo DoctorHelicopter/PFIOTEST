@@ -72,18 +72,19 @@ def index():
 def start_show(show):
     print show
     s = Show()
-    try:
-        print "Starting %s..." % show
-        #If all is successful, this won't ever return.
-        #The template should have already moved on and refreshed
-        s.start_show(show, 'all')
-        message = "Started"
-        code = 200
-    except Exception as ex:
-        print "Error!"
-        print ex
-        message = "There was an error:", ex
-        code = 500
+    #try:
+    print "Starting %s..." % show
+    #If all is successful, this won't ever return.
+    #The template should have already moved on and refreshed
+    message = s.start_show(show, 'all')
+    code = 200 if message else 500
+        #message = "Started"
+        #code = 200
+    #except Exception as ex:
+    #    print "Error!"
+    #    print ex
+    #    message = "There was an error:", ex
+    #    code = 500
     print message, code
     return message, code
         
