@@ -30,6 +30,23 @@ def ColorWipe(strip):
             strip.show()
             time.sleep(.001)
             
+def BlueChase(strip):
+    color1 = Color(0,0,150)
+    color2 = Color(0,0,200)
+    cycles = 5
+    
+    ColorChase(strip, color1, color2, cycles)
+    
+def ColorChase(strip, color1, color2, cycles):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, color1)
+    strip.show()
+    for c in range(cycles):
+        for i in range(strip.numPixels()):
+            strip.setPixelColor(i+1, color2)
+            strip.setPixelColor(i, color1)
+            strip.show()
+            
 
         
 STRIPS = {"Ring" : {
@@ -41,7 +58,8 @@ STRIPS = {"Ring" : {
                 }
         }
 SHOWS = {
-    "ColorWipe" : ColorWipe
+    "ColorWipe" : ColorWipe,
+    "BlueChase" : BlueChase
     }  
 
 if __name__=="__main__":
