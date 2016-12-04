@@ -16,6 +16,7 @@ class Show:
         #1 second per step 
         #to be used as delay time after each step
         self.STEP_DELAY = 4 
+        self.LIGHTS = {}
         #showlist.json should be prefilled with your show configurations
         with open(os.path.join(os.getcwd(),'static/showlist.json'),'r') as f:
             self.SHOW_LIST = json.loads(f.read())
@@ -24,6 +25,8 @@ class Show:
         with open(os.path.join(os.getcwd(),'static/lights.json'),'r') as f:
             for name, light in json.loads(f.read()).iteritems():
                 self.LIGHTS[name] = bp.LEDStrip(LPD.DriverLPD8806(light['size'], dev = light['path']), threadedUpdate = True, masterBrightness = 126, pixelWidth = 1)
+        print self.SHOW_LIST
+        print self.LIGHTS
         #self.startup()
         
     def startup(self):
