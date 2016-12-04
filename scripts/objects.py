@@ -54,7 +54,6 @@ class Show:
     def get_anim(self, show):
         print "Getting animation: %s" % show
         ret = eval(self.SHOW_LIST[show])
-        print ret
         return ret
                       
         
