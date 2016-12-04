@@ -1,3 +1,3 @@
 {
-    "ring" : {"size" : 24, "path" : "/dev/spidev0.0"}
+    "ring" : {"size" : 24, "path" : "/dev/spidev0.1"}
 }
