@@ -54,6 +54,24 @@ def GreenChase(strip):
     
     ColorChase(strip, color1, color2, cycles)
     
+def StarBlueChase(strip):
+    color1 = Color(0,0,100)
+    color2 = Color(50,50,200)
+    cycles = 10
+    StarChase(strip, color1, color2, cycles)
+    
+    
+def StarChase(strip, color1, color2, cycles):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, color1)
+    strip.show()
+    for c in range(cycles):
+        for i in range(6):
+            strip.setPixelColor(((i / 6) * strip.numPixels()) + 1,color2)
+            strip.setPixelColor((i / 6) * strip.numPixels(),color2)
+            strip.show()
+            time.sleep(.001)
+    
     
 def ColorChase(strip, color1, color2, cycles):
     for i in range(strip.numPixels()):
@@ -79,7 +97,8 @@ SHOWS = {
     "ColorWipe" : ColorWipe,
     "BlueChase" : BlueChase,
     "GreenChase" : GreenChase,
-    "RedChase" : RedChase
+    "RedChase" : RedChase,
+    "StarBlueChase" : StarBlueChase
     }  
 
 if __name__=="__main__":
