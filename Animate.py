@@ -1,18 +1,6 @@
 from neopixel import *
 import time
 
-STRIPS = {"Ring" : {
-                    "LED_COUNT"   : 24,      # Number of LED pixels.
-                    "LED_PIN"     : 18,      # GPIO pin connected to the pixels (must support PWM!).
-                    "LED_FREQ_HZ" : 800000,  # LED signal frequency in hertz (usually 800khz)
-                    "LED_DMA"     : 5,       # DMA channel to use for generating signal (try 5)
-                    "LED_INVERT"  : False,   # True to invert the signal (when using NPN transistor level shift)
-                }
-        }
-SHOWS = {
-    "ColorWipe" : ColorWipe
-    }
-
 def main(args):
     strips = args[1]
     shows = args[2]        
@@ -40,7 +28,17 @@ def ColorWipe(strip):
             strip.show()
             time.sleep(.001)
         
-    
+STRIPS = {"Ring" : {
+                    "LED_COUNT"   : 24,      # Number of LED pixels.
+                    "LED_PIN"     : 18,      # GPIO pin connected to the pixels (must support PWM!).
+                    "LED_FREQ_HZ" : 800000,  # LED signal frequency in hertz (usually 800khz)
+                    "LED_DMA"     : 5,       # DMA channel to use for generating signal (try 5)
+                    "LED_INVERT"  : False,   # True to invert the signal (when using NPN transistor level shift)
+                }
+        }
+SHOWS = {
+    "ColorWipe" : ColorWipe
+    }  
 
 if __name__=="__main__":
     main(sys.argv)
