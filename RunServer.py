@@ -73,7 +73,7 @@ def start_show(show):
     print "Starting %s..." % show
     #If all is successful, this won't ever return.
     #The template should have already moved on and refreshed
-    message = s.start_show(show, 'all')
+    message = s.start_show(show)
     code = 200 if message else 500
         #message = "Started"
         #code = 200
